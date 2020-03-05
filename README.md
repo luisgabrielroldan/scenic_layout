@@ -1,6 +1,38 @@
 # ScenicLayout
 
-**TODO: Add description**
+This is an experimental library for render layouts using scenic.
+
+## Sample
+
+```elixir
+defmodule ScenicLayoutTest.Scene.Test do
+  use ScenicLayout
+
+  require Logger
+
+  view_port margin: 10 do
+    linear_layout height: :fill_parent, orientation: :vertical do
+      box(color: :red, height: 32, margin_bottom: 10, id: :box1)
+      box(color: :lime, height: :fill_parent)
+      box(color: :orange_red, height: :fill_parent, margin: 50)
+      box(color: :yellow, height: 32)
+    end
+  end
+
+  def handle_input(event, context, state) do
+    Logger.info("Received event: #{inspect(event)} from #{inspect(context.id)}")
+    {:noreply, state}
+  end
+end
+```
+
+<p align="center">
+  <br>
+  <br>
+  <img src="images/preview.png"><br>
+    Rendered scene
+  <br>
+</p>
 
 ## Installation
 
@@ -14,8 +46,3 @@ def deps do
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/scenic_layout](https://hexdocs.pm/scenic_layout).
-
