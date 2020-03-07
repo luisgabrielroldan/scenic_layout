@@ -22,8 +22,8 @@ defmodule ScenicLayout do
 
         registry =
           viewport(viewport_status)
-          |> ScenicLayout.Block.calculate_layout()
           |> IO.inspect
+          |> ScenicLayout.Block.calculate_layout()
 
         graph =
           registry

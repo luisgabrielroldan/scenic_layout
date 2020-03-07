@@ -32,28 +32,27 @@ defmodule ScenicLayout.Components.View do
       def render(_view, graph, _registry),
         do: graph
 
-      defdelegate calculate_layout(view, registry), to: Block
-      defdelegate calculate_block_width(view, registry), to: Block
-      defdelegate calculate_block_position(view, registry), to: Block
-
-      defoverridable render: 3,
-                     calculate_layout: 2,
-                     calculate_block_width: 2,
-                     calculate_block_position: 2
+      defoverridable render: 3
     end
   end
 
-  def margin_box(view) do
+  def margin_box_width(view) do
     %{
-      padding: %{top: pt, right: pr, bottom: pb, left: pl},
-      margin: %{top: mt, right: mr, bottom: mb, left: ml},
-      content: %{width: cw, height: ch}
+      padding: %{right: pr, left: pl},
+      margin: %{right: mr, left: ml},
+      content: %{width: cw}
     } = view
 
+    ml + pl + cw + mr + pr
+  end
+
+  def margin_box_height(view) do
     %{
-      Rect.zero()
-      | width: ml + pl + cw + mr + pr,
-        height: mt + pt + ch + mb + pb
-    }
+      padding: %{top: pt, bottom: pb},
+      margin: %{top: mt, bottom: mb},
+      content: %{height: ch}
+    } = view
+
+    mt + pt + ch + mb + pb
   end
 end

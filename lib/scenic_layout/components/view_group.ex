@@ -1,6 +1,7 @@
 defmodule ScenicLayout.Components.ViewGroup do
   @view_group_fields [
-    children: []
+    children: [],
+    orientation: :vertical
   ]
 
   defmacro __using__(opts \\ []) do
