@@ -22,7 +22,7 @@ defmodule ScenicLayout.Components.Box do
     end
   end
 
-  def render(view, graph, _registry) do
+  def render(view, graph, _registry, _opts) do
     Scenic.Primitives.rectangle(
       graph,
       {view.content.width, view.content.height},

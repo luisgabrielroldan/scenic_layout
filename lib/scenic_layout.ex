@@ -9,7 +9,7 @@ defmodule ScenicLayout do
     ViewPort
   }
 
-  defmacro __using__(_opts \\ []) do
+  defmacro __using__(using_opts \\ []) do
     quote do
       use Scenic.Scene
 
@@ -22,13 +22,12 @@ defmodule ScenicLayout do
 
         registry =
           viewport(viewport_status)
-          |> IO.inspect
           |> ScenicLayout.Block.calculate_layout()
 
         graph =
           registry
           |> Map.fetch!(0)
-          |> ViewPort.render(Scenic.Graph.build(), registry)
+          |> ViewPort.render(Scenic.Graph.build(), registry, unquote(using_opts))
 
         {:ok, graph, push: graph}
       end

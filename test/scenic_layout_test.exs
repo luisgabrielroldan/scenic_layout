@@ -24,9 +24,7 @@ defmodule ScenicLayoutTest do
 
   test "" do
     registry = Foo.viewport(%{size: {640, 480}})
-    # IO.inspect(registry)
-    # viewport = Map.get(registry, 0)
-    #
+
     registry =
       ScenicLayout.Block.calculate_layout(registry)
       |> IO.inspect()

@@ -29,10 +29,10 @@ defmodule ScenicLayout.Components.View do
 
       defstruct unquote(extra_fields)
 
-      def render(_view, graph, _registry),
+      def render(_view, graph, _registry, _opts),
         do: graph
 
-      defoverridable render: 3
+      defoverridable render: 4
     end
   end
 
@@ -54,5 +54,26 @@ defmodule ScenicLayout.Components.View do
     } = view
 
     mt + pt + ch + mb + pb
+  end
+
+  def debug_render(graph, %{content: content}, opts) do
+    case opts[:debug_edges] do
+      v when v in [false, nil] ->
+        graph
+
+      value ->
+        color =
+          case value do
+            true -> :lime
+            color -> color
+          end
+
+        Scenic.Primitives.rectangle(
+          graph,
+          {content.width, content.height},
+          stroke: {1, color},
+          translate: {content.x, content.y}
+        )
+    end
   end
 end

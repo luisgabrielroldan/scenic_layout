@@ -4,6 +4,8 @@ defmodule ScenicLayout.Components.ViewGroup do
     orientation: :vertical
   ]
 
+  alias ScenicLayout.Components.View
+
   defmacro __using__(opts \\ []) do
     extra_fields =
       Keyword.get(opts, :fields, [])
@@ -13,28 +15,26 @@ defmodule ScenicLayout.Components.ViewGroup do
       use ScenicLayout.Components.View,
         fields: unquote(extra_fields)
 
-      def render(%{children: children} = view, graph, registry) do
+      def render(%{children: children} = view, graph, registry, opts \\ []) do
         %{content: content} = view
 
-        Scenic.Primitives.group(
-          graph,
-          fn graph1 ->
-            view.children
-            |> Enum.map(&Map.fetch!(registry, &1))
-            |> Enum.reduce(graph1, fn %view_module{} = view1, graph2 ->
-              view_module.render(view1, graph2, registry)
-            end)
-          end,
-          translate: {content.x, content.y},
-          scissor: {content.width, content.height},
-          id: view.client_id
-        )
-
-        # |> Scenic.Primitives.rectangle(
-        #   {content.width, content.height},
-        #   stroke: {1, :white},
-        #   translate: {content.x, content.y}
-        # )
+        graph =
+          Scenic.Primitives.group(
+            graph,
+            fn graph1 ->
+              view.children
+              |> Enum.map(&Map.fetch!(registry, &1))
+              |> Enum.reduce(graph1, fn %view_module{} = view1, graph2 ->
+                view1
+                |> view_module.render(graph2, registry, opts)
+                |> View.debug_render(view1, opts)
+              end)
+            end,
+            translate: {content.x, content.y},
+            scissor: {content.width, content.height},
+            id: view.client_id
+          )
+          |> View.debug_render(view, opts)
       end
     end
   end

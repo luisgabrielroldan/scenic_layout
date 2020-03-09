@@ -1,5 +1,7 @@
 defmodule ScenicLayout.Block do
-  @moduledoc false
+  @moduledoc """
+  Layout block calculation functions
+  """
 
   alias ScenicLayout.Components.View
 
@@ -86,7 +88,6 @@ defmodule ScenicLayout.Block do
             children
             |> Enum.map(&fetch_view!(registry, &1))
             |> Enum.split_with(fn %{content: content} -> Map.get(content, dim) == :fill_parent end)
-            |> IO.inspect()
 
           reserved_space =
             Enum.reduce(fixed, 0, fn fc, acc ->
