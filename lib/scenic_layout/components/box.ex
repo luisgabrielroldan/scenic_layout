@@ -28,7 +28,7 @@ defmodule ScenicLayout.Components.Box do
       {view.content.width, view.content.height},
       fill: view.color,
       translate: {view.content.x, view.content.y},
-      id: view.client_id
+      id: view.id
     )
   end
 end

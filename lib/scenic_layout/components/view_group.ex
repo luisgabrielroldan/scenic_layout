@@ -32,7 +32,7 @@ defmodule ScenicLayout.Components.ViewGroup do
             end,
             translate: {content.x, content.y},
             scissor: {content.width, content.height},
-            id: view.client_id
+            id: view.id
           )
           |> View.debug_render(view, opts)
       end
