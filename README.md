@@ -11,11 +11,28 @@ defmodule ScenicLayoutTest.Scene.Test do
   require Logger
 
   view_port margin: 10 do
-    linear_layout height: :fill_parent, orientation: :vertical do
-      box(color: :red, height: 32, margin_bottom: 10, id: :box1)
-      box(color: :lime, height: :fill_parent)
-      box(color: :orange_red, height: :fill_parent, margin: 50)
-      box(color: :yellow, height: 32)
+    linear_layout orientation: :horizontal do
+      linear_layout height: :fill_parent, orientation: :vertical do
+        box(color: :white, margin_right: 20, margin_bottom: 20)
+
+        linear_layout height: :fill_parent, orientation: :horizontal do
+          box(color: :red, height: :fill_parent, width: :fill_parent)
+          box(color: :cyan, height: :fill_parent, width: :fill_parent)
+        end
+      end
+
+      linear_layout height: :fill_parent, orientation: :horizontal do
+        box(color: :red, padding_right: 10)
+
+        linear_layout height: :fill_parent, orientation: :vertical do
+          box(color: :lime, height: :fill_parent, width: :fill_parent)
+          box(color: :purple, height: :fill_parent, width: :fill_parent)
+          box(color: :lime, height: :fill_parent, width: :fill_parent)
+          box(color: :purple, height: :fill_parent, width: :fill_parent)
+          box(color: :lime, height: :fill_parent, width: :fill_parent)
+          box(color: :purple, height: :fill_parent, width: :fill_parent)
+        end
+      end
     end
   end
 
